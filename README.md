@@ -1,5 +1,16 @@
 # PoseCNN-PyTorch: A PyTorch Implementation of the PoseCNN Framework for 6D Object Pose Estimation
 
+This project uses the basic framework provided by the authors from NVLABs.
+The files used for simple comparison of Allocentric and Egocentric Pose Estimation are found in /tools.
+
+#### Allocentric View Estimation
+
+We implement a simple framework to compare models trained with allocentric and egocentric views.
+In Egocentric View Estimation we have the problem that objects are not transaltion invariant.
+This means an object instance (with a fixed rotation component) in the egocentric view look different depending on the location in the image.
+
+Using the Allocentric Coordinate Sytem allows use to fix this translation invariance and different object appearances lead to different rotation components.
+
 ### Introduction
 
 We implement PoseCNN in PyTorch in this project.
