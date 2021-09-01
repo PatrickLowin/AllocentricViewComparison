@@ -9,7 +9,11 @@ We implement a simple framework to compare models trained with allocentric and e
 In Egocentric View Estimation we have the problem that objects are not transaltion invariant.
 This means an object instance (with a fixed rotation component) in the egocentric view look different depending on the location in the image.
 
+<p align="center"><img src="./data/pics/cars.png" width="640" height="320"/></p>
+
 Using the Allocentric Coordinate Sytem allows use to fix this translation invariance and different object appearances lead to different rotation components.
+
+<p align="center"><img src="./data/pics/allovsego.png" width="640" height="320"/></p>
 
 ### Introduction
 
