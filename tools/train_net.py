@@ -19,13 +19,14 @@ import sys
 import os
 import os.path as osp
 import cv2
+import time
 
 import _init_paths
-import datasets
+
 import networks
 from fcn.config import cfg, cfg_from_file, get_output_dir
 from fcn.train import train
-from datasets.factory import get_dataset
+
 
 def parse_args():
     """
@@ -59,6 +60,7 @@ def parse_args():
     parser.add_argument('--network', dest='network_name',
                         help='name of the network',
                         default=None, type=str)
+    parser.add_argument('--allocentric', action='store_true', default= False, help='use allocentric?')
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -86,6 +88,17 @@ if __name__ == '__main__':
 
     # prepare dataset
     cfg.MODE = 'TRAIN'
+
+    if args.allocentric:
+        import datasets
+        from datasets.factory import get_dataset
+        print('ALLOCENTRIC POSE ESTIMATION')
+    else:
+        import datasets_ego
+        from datasets_ego.factory import get_dataset
+        print('EGOCENTRIC POSE ESTIMATION')
+
+    time.sleep(5)
     dataset = get_dataset(args.dataset_name)
     worker_init_fn = dataset.worker_init_fn if hasattr(dataset, 'worker_init_fn') else None
     if cfg.TRAIN.SYNTHESIZE:
@@ -164,7 +177,7 @@ if __name__ == '__main__':
         if args.solver == 'sgd':
             scheduler.step()
 
-        train(dataloader, background_loader, network, optimizer, epoch)
+        train(dataloader, background_loader, network, optimizer, epoch, allocentric=args.allocentric)
 
         # save checkpoint
         if (epoch+1) % cfg.TRAIN.SNAPSHOT_EPOCHS == 0 or epoch == args.epochs - 1:

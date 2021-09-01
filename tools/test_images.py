@@ -70,7 +70,8 @@ def parse_args():
     parser.add_argument('--background', dest='background_name',
                         help='name of the background file',
                         default=None, type=str)
-
+    parser.add_argument('--allocentric', action='store_true', help='use allocentric?')
+    
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)

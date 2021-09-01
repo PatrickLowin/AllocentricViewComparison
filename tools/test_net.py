@@ -22,12 +22,10 @@ import scipy.io
 import _init_paths
 from fcn.test_dataset import test
 from fcn.config import cfg, cfg_from_file, get_output_dir
-from datasets.factory import get_dataset
+
 import networks
 from ycb_renderer import YCBRenderer
-from sdf.sdf_optimizer import sdf_optimizer
-
-def parse_args():
+from sdf.sdf_optimizer import sdf_o.ycb_video
     """
     Parse input arguments
     """
@@ -54,6 +52,7 @@ def parse_args():
     parser.add_argument('--background', dest='background_name',
                         help='name of the background file',
                         default=None, type=str)
+    parser.add_argument('--allocentric', action='store_true', help='use allocentric?')
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -67,7 +66,16 @@ if __name__ == '__main__':
 
     print('Called with args:')
     print(args)
-
+    
+    if args.allocentric:
+        import datasets
+        from datasets.factory import get_dataset
+        print('ALLOCENTRIC POSE ESTIMATION')
+    else:
+        import datasets_ego
+        from datasets_ego.factory import get_dataset
+        print('EGOCENTRIC POSE ESTIMATION')
+        
     if args.cfg_file is not None:
         cfg_from_file(args.cfg_file)
 
