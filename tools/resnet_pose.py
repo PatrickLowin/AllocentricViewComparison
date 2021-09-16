@@ -17,8 +17,7 @@ class ResNet_Pose(nn.Module):
         x = self.linear1(x)
         x = self.linear2(x)
         x = self.linear3(x).view(input.shape[0],self.classes,4) 
-        x[:,:,0] = torch.sigmoid(x[:,:,0])
+        #x[:,:,0] = torch.sigmoid(x[:,:,0])
         x = nn.functional.normalize(x, dim=2)
-        
         return x
 
